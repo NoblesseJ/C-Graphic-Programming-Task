@@ -32,9 +32,6 @@ struct _sdl_struct {
 	SDL_Surface* handSurface;
 	SDL_Rect backgroundRect;
 }sdlStruct;
-/*struct _draw_line {
-	int x1, y1, x2, y2;
-}lines[3];*/
 SDL_Rect hands[3];
 void fillTime() {
 	time_t timep;
@@ -53,20 +50,6 @@ double hourToAngle(int t) {
 	double x = t % 12;
 	return x / 12 * 2 * pi;
 }
-void setDraw(/*int type*/) {
-/*
-	lines[type].x1 = wmiddle;
-	lines[type].y1 = hmiddle;
-	if (type == hourNo) {
-		lines[hourNo].x2 = wmiddle + double(handLen[hourNo])*cos(hourToAngle(tme.hh) - pi / 2);
-		lines[hourNo].y2 = hmiddle + double(handLen[hourNo])*sin(hourToAngle(tme.hh) - pi / 2);
-	}
-	else {
-		lines[type].x2 = wmiddle + int(double(handLen[type])*cos(timeToAngle(tme.hms[type]) - pi / 2));
-		lines[type].y2 = hmiddle +int( double(handLen[type])*sin(timeToAngle(tme.hms[type]) - pi / 2));
-	}*/
-
-}
 double timeToAngleEx(int type, int t) {
 	if (type == hourNo)return(hourToAngle(t));
 	else
@@ -75,10 +58,6 @@ double timeToAngleEx(int type, int t) {
 	}
 }
 void drawHand(int type) {
-	/*SDL_SetRenderDrawColor(sdlStruct.renderer, rand()%256, rand() % 256, rand() % 256, SDL_ALPHA_OPAQUE);
-	SDL_SetRenderDrawBlendMode(sdlStruct.renderer, SDL_BLENDMODE_BLEND);
-	SDL_RenderDrawLine(sdlStruct.renderer, lines[type].x1, lines[type].y1, lines[type].x2, lines[type].y2);*/
-
 	SDL_FillRect(sdlStruct.handSurface, &sdlStruct.backgroundRect, 0x0000009f|rand());
 	SDL_Texture* hand = SDL_CreateTextureFromSurface(sdlStruct.renderer, sdlStruct.handSurface);
 	SDL_RenderCopyEx(sdlStruct.renderer, hand, &sdlStruct.backgroundRect, hands + type, 180/pi*(pi+timeToAngleEx(type, tme.hms[type])), centre+type, SDL_FLIP_VERTICAL);
